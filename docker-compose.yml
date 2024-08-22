@@ -1,0 +1,24 @@
+#mkdir docker-label-studio
+#cd docker-label-studio
+#touch docker-compose.yml
+version: '3.8'
+
+services:
+
+  label-studio:
+    image: heartexlabs/label-studio:latest
+    ports:
+      - 8080:8080
+    volumes:
+      - ./label-studio_data:/label-studio/data
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    env_file:
+      - .env
+    volumes:
+      - ./postgresql_data:/var/lib/postgresql/data
